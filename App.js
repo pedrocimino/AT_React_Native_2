@@ -12,7 +12,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
+    width: '100%',
+    // alignItems: 'stretch',
     justifyContent: 'center',
     paddingTop: 20,
   },
