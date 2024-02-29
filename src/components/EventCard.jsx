@@ -1,7 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+// import {useNavigation} from "@react-navigation/native";
 
 export default function EventCard({ event, action }) {
 
+    // const navigation = useNavigation();
     const { name, price, images } = event;
     const imgConfig = { uri: images[0] };
 

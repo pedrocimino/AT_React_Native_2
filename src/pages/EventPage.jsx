@@ -2,7 +2,33 @@ import { useState } from 'react';
 import { ScrollView, Text, View, Image, StyleSheet, Pressable } from 'react-native';
 
 export default function EventPage({ event }) {
-    const { name, description, images } = event;
+    
+    // const { name, description, images } = event;
+    const { name, description, images } = {
+        "name": "Concerto de Jazz no Parque",
+        "description": "Uma tarde relaxante de música jazz ao ar livre.",
+        "location": "Parque da Cidade",
+        "date": 1645622400000,
+        "price": 100.00,
+        "images": [
+            "https://images.pexels.com/photos/442540/pexels-photo-442540.jpeg",
+            "https://images.pexels.com/photos/2530176/pexels-photo-2530176.jpeg"
+        ],
+        "hotels": [
+            {
+                "name": "Hotel Luxo",
+                "address": "Rua das Flores, 123",
+                "proximity": 500,
+                "dailyRate": 250.00
+            },
+            {
+                "name": "Hotel Econômico",
+                "address": "Avenida Central, 456",
+                "proximity": 1000,
+                "dailyRate": 120.00
+            }
+        ]
+    };
     const [image, setImage] = useState(0);
     const [msg, setMsg] = useState(null);
 

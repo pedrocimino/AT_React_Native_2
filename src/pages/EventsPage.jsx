@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import EventCard from "../components/EventCard";
 import EventPage from "./EventPage";
+import Routes from "../routes";
 
 function converter(data) {
     // { idA: {eventA}, idB: {eventA}}
@@ -16,12 +17,15 @@ function converter(data) {
     return eventsList;
 }
 
-export default function EventsPage() {
+export default function EventsPage(props) {
+
+    // const navigation = props.navigation;
+    const { navigation } = props;
 
     const url = 'https://e1-dfe-dmrn-default-rtdb.firebaseio.com';
     const resource = 'events';
     const [events, setEvents] = useState(null);
-    const [selectedEvent, setSelectedEvent] = useState(null);
+    // const [selectedEvent, setSelectedEvent] = useState(null);
 
     useEffect(() => {
         fetch(`${url}/${resource}.json`)
@@ -33,13 +37,18 @@ export default function EventsPage() {
     }, []);
 
     function selectEvent(event) {
-        setSelectedEvent(event)
+        // setSelectedEvent(event)
+        // navigation
+        navigation.navigate(Routes.EventPage) // String -> Rota (name)
     }
 
     const showEvents = () => {
         if (events.length > 0) {
-            return events.map(event =>
-                <EventCard event={event} action={selectEvent} />
+            return events.map((event, index) =>
+                <EventCard
+                    key={'evento_' + index}
+                    event={event}
+                    action={selectEvent} />
             );
         } else {
             return (<Text>Nenhum evento cadastrado</Text>);
@@ -54,16 +63,12 @@ export default function EventsPage() {
                 </Pressable>
                 <Text style={styles.header}>Eventos</Text>
             </View>
-            {
-                selectedEvent ?
-                    <EventPage event={selectedEvent} /> :
-                    <ScrollView style={styles.container}>
-                        {events ?
-                            showEvents() :
-                            <Text>Carregando dados...</Text>
-                        }
-                    </ScrollView>
-            }
+            <ScrollView style={styles.container}>
+                {events ?
+                    showEvents() :
+                    <Text>Carregando dados...</Text>
+                }
+            </ScrollView>
         </View>
     );
 }
