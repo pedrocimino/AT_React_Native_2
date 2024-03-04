@@ -39,7 +39,7 @@ export default function EventsPage(props) {
     function selectEvent(event) {
         // setSelectedEvent(event)
         // navigation
-        navigation.navigate(Routes.EventPage) // String -> Rota (name)
+        navigation.navigate(Routes.EventPage, event) // String -> Rota (name)
     }
 
     const showEvents = () => {
@@ -57,12 +57,6 @@ export default function EventsPage(props) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerMenu}>
-                <Pressable onPress={() => setSelectedEvent(null)}>
-                    <Text>Voltar</Text>
-                </Pressable>
-                <Text style={styles.header}>Eventos</Text>
-            </View>
             <ScrollView style={styles.container}>
                 {events ?
                     showEvents() :

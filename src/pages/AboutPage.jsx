@@ -11,7 +11,7 @@ export default function AboutPage({ navigation }) {
             <Text>+55 21 99999-9999</Text>
             <Pressable
                 onPress={() => {
-                    navigation.navigate(Routes.EventsPage);
+                    navigation.navigate(Routes.EventsListPage);
                 }}
                 >
                 <Text>Eventos</Text>
