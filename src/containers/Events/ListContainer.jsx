@@ -9,9 +9,7 @@ export default function ListContainer({ events, action }) {
             action={action} />;
     }
 
-    if (!events) {
-        return <Text>Carregando dados...</Text>
-    } else if (events.length > 0) {
+    if (events.length > 0) {
         return <FlatList
             style={styles.container}
             data={events}

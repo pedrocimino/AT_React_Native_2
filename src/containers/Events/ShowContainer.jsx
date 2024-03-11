@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Image, StyleSheet, Pressable } from 'react-native';
-import DetailsContanier from './DetailsContainer';
+import DetailsContainer from './DetailsContainer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import GalleryContainer from './GalleryContainer';
+import HotelsContainer from './HotelsContainer';
 
 const Tabs = createBottomTabNavigator();
 
 export default function ShowContainer(props) {
     const { params } = props.route;
-    const { name, description, images } = params;
+    const { name, description, images, hotels } = params;
     const [image, setImage] = useState(0);
     const [msg, setMsg] = useState(null);
 
@@ -37,10 +39,14 @@ export default function ShowContainer(props) {
     return (
         <Tabs.Navigator>
             <Tabs.Screen name='details'>
-                { () => <DetailsContanier event={params} />}
+                {() => <DetailsContainer event={params} />}
             </Tabs.Screen>
-            {/* <Tabs.Screen name='gallery' /> */}
-            {/* <Tabs.Screen name='hotels' /> */}
+            <Tabs.Screen name='gallery'>
+                {() => <GalleryContainer images={images} />}
+            </Tabs.Screen>
+            <Tabs.Screen name='hotels'>
+                {() => <HotelsContainer hotels={hotels} />}
+            </Tabs.Screen>
         </Tabs.Navigator>
     );
 }
