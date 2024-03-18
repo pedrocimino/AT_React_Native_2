@@ -5,15 +5,26 @@ import Routes from './src/routes';
 
 import EventsPage from './src/pages/EventsPage';
 import AboutPage from './src/pages/AboutPage';
+import EventInsertPage from './src/pages/EventInsertPage';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+
+  const screensProps = [
+    { name: Routes.Home, component: AboutPage, options: { title: 'Sobre o App' }},
+    { name: Routes.EventsPage, component: EventsPage, options: { title: 'Eventos' }},
+    { name: Routes.EventInsertPage, component: EventInsertPage, options: { title: 'Novo Evento' }},
+  ];
+
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name={Routes.Home} component={AboutPage} />
-        <Drawer.Screen name={Routes.EventsPage} component={EventsPage} />
+        {screensProps.map(
+          (props, index) =>
+            <Drawer.Screen key={"drawer_screen_" + index} {...props} />
+        )
+        }
       </Drawer.Navigator>
     </NavigationContainer>
   );
