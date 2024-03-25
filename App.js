@@ -6,6 +6,7 @@ import Routes from './src/routes';
 import EventsPage from './src/pages/EventsPage';
 import AboutPage from './src/pages/AboutPage';
 import EventInsertPage from './src/pages/EventInsertPage';
+import PhotosPage from './src/pages/PhotosPage';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
     { name: Routes.Home, component: AboutPage, options: { title: 'Sobre o App' }},
     { name: Routes.EventsPage, component: EventsPage, options: { title: 'Eventos' }},
     { name: Routes.EventInsertPage, component: EventInsertPage, options: { title: 'Novo Evento' }},
+    { name: Routes.PhotosPage, component: PhotosPage, options: { title: 'Galeria' }},
   ];
 
   return (

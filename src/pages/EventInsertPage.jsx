@@ -12,10 +12,11 @@ export default function EventInsertPage() {
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [date, setDate] = useState("");
-    const [dateDay, setDateDay] = useState("");
-    const [dateMonth, setDateMonth] = useState("");
-    const [dateYear, setDateYear] = useState("");
+    const [dateDay, setDateDay] = useState("1");
+    const [dateMonth, setDateMonth] = useState("1");
+    const [dateYear, setDateYear] = useState("2024");
     const [price, setPrice] = useState("");
+    const [msg, setMsg] = useState(null);
     const [secureOn, setSecureOn] = useState(true);
 
 
@@ -26,11 +27,9 @@ export default function EventInsertPage() {
     for (let i = 1; i <= 31; i++) {
         dias.push({ value: i, label: i });
     }
-
     for (let i = 1; i <= 12; i++) {
         meses.push({ value: i, label: i });
     }
-
     for (let i = 2000; i <= 3000; i++) {
         anos.push({ value: i, label: i });
     }
@@ -42,10 +41,6 @@ export default function EventInsertPage() {
                 value={name}
                 onChangeText={(text) => setName(text)}
                 placeholder="Nome"
-            // secureTextEntry={secureOn}
-            // returnKeyType="send"
-            // keyboardType="email-address"
-            // inputMode="email"
             />
 
             <TextInput
@@ -103,13 +98,6 @@ export default function EventInsertPage() {
 
             <TextInput
                 style={styles.input}
-                value={date}
-                onChangeText={(text) => setDate(text)}
-                placeholder="Data"
-            />
-
-            <TextInput
-                style={styles.input}
                 value={price}
                 onChangeText={(text) => setPrice(text)}
                 placeholder="Preço"
@@ -123,10 +111,10 @@ export default function EventInsertPage() {
                         name: name,
                         description: description,
                         location: location,
-                        date: new Date(`${dateYear}/${dateMonth}/${dateDay}`),
+                        date: new Date(dateYear, dateMonth, dateDay),
                         price: Number.parseFloat(price),
                     }
-                    fetch(`${url}/${resource}`, {
+                    fetch(`${url}/${resource}.json`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -134,11 +122,13 @@ export default function EventInsertPage() {
                         body: JSON.stringify(newEvent),
                     })
                     .then(res => res.json())
-                    .then(json => {})
-                    .catch(error => {});
+                    .then(json => setMsg(json.name))
+                    .catch(error => setMsg(error.message));
                 }}>
                 <Text style={styles.btnLabel}>Salvar</Text>
             </Pressable>
+
+            { msg && <Text>{msg}</Text> }
         </View>
     )
 }

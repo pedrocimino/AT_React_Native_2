@@ -43,7 +43,7 @@ export default function EventsPage(props) {
     }, []);
 
     function selectEvent(event) {
-        navigation.navigate(Routes.EventsShowPage, event)
+        navigation.navigate(Routes.EventsShowPage, { id: event._id })
     }
 
     function StackContainer() {
