@@ -1,9 +1,9 @@
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable, ScrollView } from "react-native";
 import Routes from "../routes";
 
 export default function AboutPage({ navigation }) {
     return (
-        <View>
+        <ScrollView>
             <Text>Nossa Empresa</Text>
             <Text>Nossa Diretoria</Text>
             <Text>Nossos Colaboradores</Text>
@@ -16,6 +16,6 @@ export default function AboutPage({ navigation }) {
                 >
                 <Text>Eventos</Text>
             </Pressable>
-        </View>
+        </ScrollView>
     )
 }

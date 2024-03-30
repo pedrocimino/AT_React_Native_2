@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -8,6 +8,7 @@ import EventPage from "./EventPage";
 import Routes from "../routes";
 import ListContainer from "../containers/Events/ListContainer";
 import ShowContainer from "../containers/Events/ShowContainer";
+import AboutPage from "./AboutPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,27 +29,32 @@ export default function EventsPage(props) {
     const { navigation } = props;
     const url = 'https://e1-dfe-dmrn-default-rtdb.firebaseio.com';
     const resource = 'events';
-    const [events, setEvents] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        setIsLoading(true);
         fetch(`${url}/${resource}.json`)
             .then(res => res.json())
-            .then(resJson => {
-                const convertedList = converter(resJson);
-                setEvents(convertedList);
+            .then(eventsJson => {
+                const events = converter(eventsJson);
+                setEvents(events);
             })
             .finally(_ => setIsLoading(false));
     }, []);
-
+    
     function selectEvent(event) {
-        navigation.navigate(Routes.EventsShowPage, { id: event._id })
+        navigation.navigate(Routes.EventsShowPage, { id: event._id });
+        // setSelectedEvent(event._id);
     }
 
-    function StackContainer() {
+    /* function StackContainer() {
         return (
-            <Stack.Navigator initialRouteName={Routes.EventsListPage}>
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
                 <Stack.Screen name={Routes.EventsListPage}>
                     {() => <ListContainer events={events} action={selectEvent} />}
                 </Stack.Screen>
@@ -57,12 +63,22 @@ export default function EventsPage(props) {
                     component={ShowContainer} />
             </Stack.Navigator>
         );
-    }
+    } */
 
     if (isLoading) {
         return <ActivityIndicator />;
     } else {
-        return <StackContainer />
+        // if (!selectedEvent)
+            return <ListContainer events={events} action={selectEvent} />;
+        /* else if (selectedEvent)
+            return (
+                <View style={{flex: 1}}>
+                    <Pressable onPress={() => setSelectedEvent(null)}>
+                        <Text>Voltar</Text>
+                    </Pressable>
+                    <ShowContainer id={selectedEvent} />
+                </View>
+            ); */
     }
 }
 

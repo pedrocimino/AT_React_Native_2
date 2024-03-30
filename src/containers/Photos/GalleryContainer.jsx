@@ -26,9 +26,7 @@ export default function GalleryContainer() {
         }
     }
 
-    useFocusEffect(
-        useCallback(() => {getPhotos()}, [])
-    );
+    useFocusEffect(useCallback(() => {getPhotos()}, []));
 
     return (
         <View>

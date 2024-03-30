@@ -12,7 +12,9 @@ export default function ShowContainer(props) {
     const { params } = props.route;
     // const { name, description, images, hotels } = params;
     const { id } = params;
-
+    console.log(id);
+    // const { id } = props;
+    
     const [event, setEvent] = useState(null);
     const [image, setImage] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +42,23 @@ export default function ShowContainer(props) {
         );
     }
 
+    /* function updateEvent() {
+        // setIsLoading(true);
+        const url = 'https://e1-dfe-dmrn-default-rtdb.firebaseio.com';
+        const resource = 'events';
+        fetch(`${url}/${resource}/${id}.json`)
+            .then(res => res.json())
+            .then(event => {
+                setEvent({
+                    _id: id,
+                    ...event
+                })
+            })
+            .catch(error => setMsg(error.message))
+            .finally(setIsLoading(false));
+    }
+    useFocusEffect(useCallback(() => { updateEvent() }, [])); */
+
     useEffect(() => {
         // setIsLoading(true);
         const url = 'https://e1-dfe-dmrn-default-rtdb.firebaseio.com';
@@ -54,12 +73,16 @@ export default function ShowContainer(props) {
             })
             .catch(error => setMsg(error.message))
             .finally(setIsLoading(false));
-    }, []);
+    }, [id]);
 
     return (
         <>
             {isLoading && <ActivityIndicator />}
-            {event && <Tabs.Navigator>
+            {event && <Tabs.Navigator
+                    screenOptions={{
+                        headerShown: false,
+                    }}
+                >
                 <Tabs.Screen name='details'>
                     {() => <DetailsContainer event={event} />}
                 </Tabs.Screen>
