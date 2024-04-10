@@ -1,4 +1,4 @@
-import { Image, Text, StyleSheet, ScrollView } from "react-native"
+import { Image, StyleSheet, ScrollView } from "react-native";
 
 export default function GalleryContainer({ images }){
     return (

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import HotelCard from "../../components/HotelCard";
 
 export default function HotelsContainer({ hotels }) {
@@ -11,9 +11,6 @@ export default function HotelsContainer({ hotels }) {
                 }
                 keyExtractor={item => 'hotel_' + item.name}
             />
-            {/* {hotels.map( hotel => {
-                return <Text>{hotel.name}</Text>
-            })} */}
         </View>
     );
 }
@@ -21,6 +18,5 @@ export default function HotelsContainer({ hotels }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'blue',
     }
 })

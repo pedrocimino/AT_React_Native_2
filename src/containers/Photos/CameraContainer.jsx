@@ -10,7 +10,6 @@ export default function CameraContainer() {
     const [camera, setCamera] = useState(null);
     const [uri, setUri] = useState(null);
     const [msg, setMsg] = useState(null);
-    // const [hasPermission, setPermission] = Camera.useCameraPermissions();
 
     async function requestCamera() {
         const permission = await Camera.requestCameraPermissionsAsync();

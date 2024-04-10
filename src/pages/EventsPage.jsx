@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
-import { FlatList } from "react-native";
+import { ActivityIndicator, StyleSheet, TextInput, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import EventCard from "../components/EventCard";
-import EventPage from "./EventPage";
 import Routes from "../routes";
 import ListContainer from "../containers/Events/ListContainer";
-import ShowContainer from "../containers/Events/ShowContainer";
-import AboutPage from "./AboutPage";
 
 const Stack = createNativeStackNavigator();
 
 function converter(data) {
-    // { idA: {eventA}, idB: {eventA}}
-    const ids = Object.keys(data); // [ idA, idB, ...]
-    const events = Object.values(data); // [ {eventA}, {eventB} ]
+    const ids = Object.keys(data);
+    const events = Object.values(data);
     const eventsList = events.map((event, index) => {
         return {
             _id: ids[index],
@@ -27,11 +20,11 @@ function converter(data) {
 
 export default function EventsPage(props) {
     const { navigation } = props;
-    const url = 'https://e1-dfe-dmrn-default-rtdb.firebaseio.com';
+    const url = 'https://projeto-react-native-6aedb-default-rtdb.firebaseio.com';
     const resource = 'events';
-    const [selectedEvent, setSelectedEvent] = useState(null);
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch(`${url}/${resource}.json`)
@@ -42,48 +35,39 @@ export default function EventsPage(props) {
             })
             .finally(_ => setIsLoading(false));
     }, []);
-    
+
     function selectEvent(event) {
         navigation.navigate(Routes.EventsShowPage, { id: event._id });
-        // setSelectedEvent(event._id);
     }
 
-    /* function StackContainer() {
-        return (
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false,
-                }}
-            >
-                <Stack.Screen name={Routes.EventsListPage}>
-                    {() => <ListContainer events={events} action={selectEvent} />}
-                </Stack.Screen>
-                <Stack.Screen
-                    name={Routes.EventsShowPage}
-                    component={ShowContainer} />
-            </Stack.Navigator>
-        );
-    } */
+    const filteredEvents = events.filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    if (isLoading) {
-        return <ActivityIndicator />;
-    } else {
-        // if (!selectedEvent)
-            return <ListContainer events={events} action={selectEvent} />;
-        /* else if (selectedEvent)
-            return (
-                <View style={{flex: 1}}>
-                    <Pressable onPress={() => setSelectedEvent(null)}>
-                        <Text>Voltar</Text>
-                    </Pressable>
-                    <ShowContainer id={selectedEvent} />
-                </View>
-            ); */
-    }
+    return (
+        <View style={styles.container}>
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Procurar eventos..."
+                onChangeText={setSearchTerm}
+                value={searchTerm}
+            />
+            {isLoading ? (
+                <ActivityIndicator />
+            ) : (
+                <ListContainer events={filteredEvents} action={selectEvent} />
+            )}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-})
+    searchInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 10,
+        padding: 5,
+    },
+});

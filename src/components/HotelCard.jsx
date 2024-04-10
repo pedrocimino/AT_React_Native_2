@@ -9,7 +9,7 @@ export default function HotelCard({ hotel }) {
             </View>
             <View style={styles.footer}>
                 <Text>R$ {hotel.dailyRate.toFixed(2)}/dia</Text>
-                <Text>{hotel.proximity} m</Text>
+                <Text>{hotel.proximity}m</Text>
             </View>
         </View>
     )

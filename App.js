@@ -1,9 +1,7 @@
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useNavigation } from '@react-navigation/native';
 import Routes from './src/routes';
-
 import EventsPage from './src/pages/EventsPage';
 import AboutPage from './src/pages/AboutPage';
 import EventInsertPage from './src/pages/EventInsertPage';
@@ -31,18 +29,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        /* screenOptions={{
-          headerRight: () => (
-            <Button
-              title="Voltar"
-              onPress={() => { 
-                const navigation = useNavigation();
-                navigation.goBack();
-              }} />
-          )
-        }} */
-      >
+      <Drawer.Navigator>
         {screensProps.map(
           (props, index) =>
             <Drawer.Screen key={"drawer_screen_" + index} {...props} />

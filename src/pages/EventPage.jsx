@@ -4,8 +4,6 @@ import { ScrollView, Text, View, Image, StyleSheet, Pressable } from 'react-nati
 export default function EventPage(props) {
 
     const { params } = props.route;
-    
-    // const { name, description, images } = event;
     const { name, description, images } = params;
     const [image, setImage] = useState(0);
     const [msg, setMsg] = useState(null);
